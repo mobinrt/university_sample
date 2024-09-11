@@ -3,7 +3,7 @@ from typing import List
 
 from SCHEMA.schemas import ClassCreate, ClassDisplay
 from SERVICE.services_class import ClassroomServices
-from dependencies import get_classroom_service
+from DEPEND.depend_service import get_classroom_service
 
 router = APIRouter(prefix='/classroom', tags=['classroom'])
 

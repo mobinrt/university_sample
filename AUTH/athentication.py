@@ -6,7 +6,7 @@ from fastapi.security import OAuth2PasswordBearer
 from DB.models import TeacherModel, StudentModel
 from AUTH.auth_services import AuthServices
 from SCHEMA.schemas import TokenDisplay, UserDisplay
-from dependencies import get_auth_service
+from DEPEND.depend_service import get_auth_service
 
 router = APIRouter(tags=['authentication'])
 oauth2_sc = OAuth2PasswordBearer(tokenUrl='token')

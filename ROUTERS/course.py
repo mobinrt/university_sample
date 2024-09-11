@@ -2,9 +2,9 @@ from fastapi import APIRouter, status, Depends
 from typing import List
 
 from SERVICE.services_course import CourseServices
-from DB.models import CourseModel
+
 from SCHEMA.schemas import CourseCreate, CourseDisplay
-from dependencies import get_course_service
+from DEPEND.depend_service import get_course_service
 
 router = APIRouter(prefix='/course', tags=['course'])
 
