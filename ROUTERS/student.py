@@ -33,7 +33,7 @@ async def update_student(
     current_user = await auth_service.get_current_user(token)
     return await student_usecase.update(student, current_user)
 
-@router.delete('/delete/by/id/{student_id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/delete/{student_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_student_by_id(stu_id: int, student_usecase: StudentUseCase = Depends(get_student_usecase)):
     await student_usecase.delete_by_id(stu_id)
 

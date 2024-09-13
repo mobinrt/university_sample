@@ -14,11 +14,11 @@ router = APIRouter(prefix='/teacher', tags=['teacher'])
 async def create_teacher(teacher: TeacherCreate, teacher_usecase: TeacherUseCase = Depends(get_teacher_usecase)):
     return await teacher_usecase.create(teacher)
 
-@router.get("/get/teacher/by/id/{teacher_id}", response_model=TeacherDisplay, status_code=status.HTTP_200_OK)
+@router.get("/teacher/by/{teacher_id}", response_model=TeacherDisplay, status_code=status.HTTP_200_OK)
 async def get_teacher_by_id(stu_id:int, teacher_usecase: TeacherUseCase = Depends(get_teacher_usecase)):
     return await teacher_usecase.get_by_id(stu_id)
     
-@router.get("/get/all", response_model=List[TeacherDisplay], status_code=status.HTTP_200_OK)
+@router.get("/all", response_model=List[TeacherDisplay], status_code=status.HTTP_200_OK)
 async def get_all_teachers(teacher_usecase: TeacherUseCase = Depends(get_teacher_usecase)):
     return await teacher_usecase.get_all()
 
@@ -32,7 +32,7 @@ async def update_teacher(
     current_user = await auth_service.get_current_user(token)
     return await teacher_usecase.update(teacher, current_user)
 
-@router.delete('/delete/by/id/{teacher_id}', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/by/{teacher_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_teacher_by_id(stu_id: int, teacher_usecase: TeacherUseCase = Depends(get_teacher_usecase)):
     await teacher_usecase.delete_by_id(stu_id)
 
@@ -40,7 +40,7 @@ async def delete_teacher_by_id(stu_id: int, teacher_usecase: TeacherUseCase = De
 async def get_hash_table_id(teacher_usecase: TeacherUseCase = Depends(get_teacher_usecase)):
     return await teacher_usecase.get_hash_table_id()
 
-@router.delete("/delete/students/by/{student_id}/from/courses/{course_id}", status_code=status.HTTP_200_OK)
+@router.delete("/delete/students/{student_id}/from/courses/{course_id}", status_code=status.HTTP_200_OK)
 async def remove_student_from_course(
     student_id: int,
     course_id: int,
