@@ -8,15 +8,12 @@ from UTILITY.custom_error import CustomError
 from DB.models import student_course_association
 import hash
 
-from sqlalchemy import delete  
-from sqlalchemy.future import select
-from fastapi import HTTPException, status
+from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
-
 class TeacherServices(ObjectServices):
-    def __init__(self, session: AsyncSession, unique_id: UniqueID):
-        super().__init__(session, unique_id, TeacherModel, ObjectToSTR.TEACHER)
+    def __init__(self, session: AsyncSession):
+        super().__init__(session, TeacherModel)
         
     async def create_object(self, new_teacher: TeacherModel, teacher_id: int):
         hash_password = hash.get_password_hash(new_teacher.password)

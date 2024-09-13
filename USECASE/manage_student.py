@@ -30,7 +30,7 @@ class StudentUseCase(ObjectUseCase[StudentServices]):
         return StudentDisplay.model_validate(current_stu)
     
     async def attend_in_course(self, course_id: int, current_user: StudentModel):
-        course = await self.service.get_object_by_id_for_model(course_id, CourseModel)
+        course = await self.service.get_object_by_id_filter_model(course_id, CourseModel)
         if not course:
             CustomError.existince_check(course_id, ObjectToSTR.COURSE, False)
 

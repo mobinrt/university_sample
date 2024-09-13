@@ -18,7 +18,7 @@ class TeacherUseCase(ObjectUseCase[TeacherServices]):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Username should not be blank!')
         
         teacher_id = self.unique_id.insert(ObjectDigits.TEACHER.value, ObjectToSTR.TEACHER.value)
-        db_teacher = self.service.create_object(new_teacher, teacher_id)
+        db_teacher = await self.service.create_object(new_teacher, teacher_id)
         self.unique_id.save_to_dict(db_teacher.name, db_teacher.id, ObjectToSTR.TEACHER.value)
         return db_teacher
     
@@ -27,7 +27,7 @@ class TeacherUseCase(ObjectUseCase[TeacherServices]):
         return TeacherDisplay.model_validate(current_teacher)
     
     async def fired_students_from_course(self, course_id: int, student_id: int, current_user: TeacherModel):
-        course = await self.service.get_object_by_id_for_model(course_id, CourseModel)
+        course = await self.service.get_object_by_id_filter_model(course_id, CourseModel)
         if not course:
             raise CustomError.existince_check(course_id, ObjectToSTR.COURSE, False)
         

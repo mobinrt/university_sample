@@ -5,7 +5,7 @@ from DB.database import db
 from id_manager import get_unique_id_instance
 from SERVICE.services_student import StudentServices
 from SERVICE.services_teacher import TeacherServices
-from SERVICE.services_class import ClassroomServices
+from SERVICE.services_classroom import ClassroomServices
 from SERVICE.services_course import CourseServices
 from AUTH.auth_services import AuthServices
 

@@ -18,23 +18,20 @@ class ObjectServices(BaseService):
     async def create_object(self, new_object: T) -> T:
         pass
     
-    
     async def get_object_by_id(self, object_id: int) -> T:
         result = await self.session.execute(select(self.model).filter(self.model.id == object_id))
         object = result.scalars().first()
         return object
     
-    async def get_object_by_id_for_model(self, object_id: int, model: Type[T]) -> T:
+    async def get_object_by_id_filter_model(self, object_id: int, model: Type[T]) -> T:
         result = await self.session.execute(select(model).filter(model.id == object_id))
         object = result.scalars().first()
         return object
-        
 
     async def get_all_objects(self) -> List[T]:
         result = await self.session.execute(select(self.model))
         objects = result.scalars().all()
         return objects
-    
     
     async def update_obj(self, update_obj: T, current_obj: T) -> T:
         for var, value in vars(update_obj).items():
@@ -46,7 +43,6 @@ class ObjectServices(BaseService):
         await self.session.commit()
         await self.session.refresh(current_obj)
         return current_obj
-        
             
     async def delete_by_id(self, del_object: int):
         await self.session.delete(del_object)
@@ -60,8 +56,8 @@ class ObjectServices(BaseService):
             )
         )
         return student_enrollment_query.scalar() is not None
-    '''
-    where should i put this method?
-    '''
+        '''
+        where should i put this method?
+        '''
 
     
