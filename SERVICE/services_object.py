@@ -3,6 +3,7 @@ from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from abc import abstractmethod
 
+from DB.models import StudentModel, student_course_association
 from SERVICE.base_service import BaseService
 import hash
 
@@ -50,5 +51,17 @@ class ObjectServices(BaseService):
     async def delete_by_id(self, del_object: int):
         await self.session.delete(del_object)
         await self.session.commit()
-        
+    
+    async def is_student_enrolled_in_course(self, course_id: int, student_id: int):
+        student_enrollment_query = await self.session.execute(
+        select(StudentModel.id).join(student_course_association).where(
+            student_course_association.c.course_id == course_id,
+            student_course_association.c.student_id == student_id
+            )
+        )
+        return student_enrollment_query.scalar() is not None
+    '''
+    where should i put this method?
+    '''
+
     

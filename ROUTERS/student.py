@@ -13,15 +13,15 @@ router = APIRouter(prefix='/student', tags=['student'])
 
 @router.post("/create/", response_model=StudentDisplay, status_code=status.HTTP_201_CREATED)
 async def create_student(student: StudentCreate, student_usecase: StudentUseCase = Depends(get_student_usecase)):
-    return await student_usecase.create_student(student)
+    return await student_usecase.create(student)
 
 @router.get("/student/{student_id}", response_model=StudentDisplay, status_code=status.HTTP_200_OK)
 async def get_student_by_id(stu_id:int, student_usecase: StudentUseCase = Depends(get_student_usecase)):
-    return await student_usecase.get_object_by_id(stu_id)
+    return await student_usecase.get_by_id(stu_id)
     
 @router.get("/all", response_model=List[StudentDisplay], status_code=status.HTTP_200_OK)
 async def get_all_students(student_usecase: StudentUseCase = Depends(get_student_usecase)):
-    return await student_usecase.get_all_objects()
+    return await student_usecase.get_all()
 
 @router.put('/update/current_student', response_model=StudentDisplay, status_code=status.HTTP_200_OK)
 async def update_student(
@@ -31,7 +31,7 @@ async def update_student(
     student_usecase: StudentUseCase = Depends(get_student_usecase)
     ):
     current_user = await auth_service.get_current_user(token)
-    return await student_usecase.update_obj(student, current_user)
+    return await student_usecase.update(student, current_user)
 
 @router.delete('/delete/by/id/{student_id}', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_student_by_id(stu_id: int, student_usecase: StudentUseCase = Depends(get_student_usecase)):

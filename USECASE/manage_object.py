@@ -1,5 +1,4 @@
 from SERVICE.services_object import ObjectServices
-from SCHEMA.schema_student import StudentCreate, StudentUpdate, StudentDisplay
 from UTILITY.singelton_meta import SingletonMeta
 from UTILITY.custom_error import CustomError
 from UTILITY.utility_course import CourseUtils
@@ -14,7 +13,7 @@ from typing import TypeVar, List, Generic
 T = TypeVar('T')
 TService = TypeVar('TService', bound=ObjectServices)
 
-class ObjectUseCase(Generic[TService]):
+class ObjectUseCase(Generic[TService], metaclass=SingletonMeta):
     def __init__(self, service: TService, unique_id: UniqueID, object_to_str: ObjectToSTR):
         self.service = service
         self.unique_id = unique_id
@@ -36,7 +35,7 @@ class ObjectUseCase(Generic[TService]):
     async def update(self, update_obj: T, current_obj: T) -> T:
         return await self.service.update_obj(update_obj, current_obj)
     
-    async def delete(self, object_id: int):
+    async def delete_by_id(self, object_id: int):
         del_object = await self.service.get_object_by_id(object_id)
         if not del_object:
             CustomError.existince_check(object_id, self.object_to_str.value, False)

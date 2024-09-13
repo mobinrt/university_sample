@@ -29,15 +29,7 @@ class StudentServices(ObjectServices):
     #    current_stu = await super().update_obj(update_stu, login_stu)
     #    return StudentDisplay.model_validate(current_stu)
     
-    async def is_student_enrolled_in_course(self, course_id: int, student_id: int):
-        student_enrollment_query = await self.session.execute(
-        select(StudentModel.id).join(student_course_association).where(
-            student_course_association.c.course_id == course_id,
-            student_course_association.c.student_id == student_id
-            )
-        )
-        return student_enrollment_query.scalar() is not None
-
+    
     async def enroll_student_in_course(self, course_id: int, student_id: int):    
         
         await self.session.execute(
