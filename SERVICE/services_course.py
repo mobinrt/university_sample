@@ -1,13 +1,7 @@
 from DB.models import CourseModel
-from ENUMS.object_type_str import ObjectToSTR
-from ENUMS.object_type_digit import ObjectDigits
 from SERVICE.services_object import ObjectServices
-from UTILITY.custom_error import CustomError
-from SCHEMA.schemas import CourseDisplay, CourseUpdate
 
-from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 
 class CourseServices(ObjectServices):
     def __init__(self, session: AsyncSession):

@@ -1,7 +1,6 @@
-from DB.models import ClassModel, CourseModel
+from DB.models import ClassModel
 from SERVICE.services_object import ObjectServices
 
-from sqlalchemy.future import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 class ClassroomServices(ObjectServices):

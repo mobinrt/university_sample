@@ -1,10 +1,5 @@
-from DB.models import TeacherModel, CourseModel
-from id_manager import UniqueID
-from ENUMS.object_type_str import ObjectToSTR
-from ENUMS.object_type_digit import ObjectDigits
-from SCHEMA.schema_teacher import TeacherDisplay
+from DB.models import TeacherModel
 from SERVICE.services_object import ObjectServices
-from UTILITY.custom_error import CustomError
 from DB.models import student_course_association
 import hash
 

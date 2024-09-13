@@ -1,12 +1,9 @@
 from DB.models import StudentModel, CourseModel, student_course_association
 from SERVICE.services_object import ObjectServices
-from SCHEMA.schema_student import StudentDisplay, StudentCreate
-from ENUMS.object_type_str import ObjectToSTR 
+from SCHEMA.schema_student import StudentCreate
 import hash
 
-from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 
 class StudentServices(ObjectServices):
     def __init__(self, session: AsyncSession):
