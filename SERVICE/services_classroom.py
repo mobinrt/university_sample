@@ -19,7 +19,6 @@ class ClassroomServices(ObjectServices):
         await self.session.execute(text("SET FOREIGN_KEY_CHECKS=0;"))
 
         try:
-            # Check if the new class_id already exists in the courses table
             class_id_exists = await self.session.execute(
                 text("SELECT 1 FROM courses WHERE class_id = :new_id"), {'new_id': new_id}
             )
@@ -27,7 +26,6 @@ class ClassroomServices(ObjectServices):
             if class_id_exists.scalar():
                 raise ValueError(f"Class ID {new_id} already exists in the courses table.")
 
-            # Proceed to update all courses with the old class_id to the new class_id
             result = await self.session.execute(
                 text("UPDATE courses SET class_id = :new_id WHERE class_id = :old_id"),
                 {'new_id': new_id, 'old_id': old_id}
@@ -37,7 +35,6 @@ class ClassroomServices(ObjectServices):
                 raise ValueError("No courses were updated, check if old_id exists.")
         
         finally:
-            # Re-enable foreign key checks
             await self.session.execute(text("SET FOREIGN_KEY_CHECKS=1;"))
         
     async def get_hash_table_id(slef):
