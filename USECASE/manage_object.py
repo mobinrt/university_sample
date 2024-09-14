@@ -38,7 +38,7 @@ class ObjectUseCase(Generic[TService], metaclass=SingletonMeta):
     async def delete_by_id(self, object_id: int):
         del_object = await self.service.get_object_by_id(object_id)
         if not del_object:
-            CustomError.existince_check(object_id, self.object_to_str.value, False)
+            CustomError.existince_check(object_id, self.object_to_str, False)
             
         if self.object_to_str.value != 'classroom':
             self.unique_id.delete(object_id, self.object_to_str.value)

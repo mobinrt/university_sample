@@ -12,8 +12,8 @@ async def create_classroom(classroom: ClassCreate, classroom_usecase: ClassroomU
     return await classroom_usecase.create(classroom)
 
 @router.get("/classroom/by/{classroom_id}", response_model=ClassDisplay, status_code=status.HTTP_200_OK)
-async def get_classroom_by_id(stu_id:int, classroom_usecase: ClassroomUseCase = Depends(get_classroom_usecase)):
-    return await classroom_usecase.get_by_id(stu_id)
+async def get_classroom_by_id(classroom_id:int, classroom_usecase: ClassroomUseCase = Depends(get_classroom_usecase)):
+    return await classroom_usecase.get_by_id(classroom_id)
     
 @router.get("/all", response_model=List[ClassDisplay], status_code=status.HTTP_200_OK)
 async def get_all_classrooms(classroom_usecase: ClassroomUseCase = Depends(get_classroom_usecase)):
@@ -21,7 +21,7 @@ async def get_all_classrooms(classroom_usecase: ClassroomUseCase = Depends(get_c
  
 @router.put('/update/classroom/by/{classroom_id}', response_model=ClassDisplay, status_code=status.HTTP_200_OK)
 async def update_classroom(classroom: ClassCreate, classroom_id, classroom_usecase: ClassroomUseCase = Depends(get_classroom_usecase)):
-    old_classroom = await classroom_usecase.get_object_by_id(classroom_id)
+    old_classroom = await classroom_usecase.get_by_id(classroom_id)
     return await classroom_usecase.update(classroom, old_classroom)
     
 @router.delete('/by/{classroom_id}', status_code=status.HTTP_200_OK)

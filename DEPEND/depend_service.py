@@ -10,10 +10,9 @@ from SERVICE.services_course import CourseServices
 from AUTH.auth_services import AuthServices
 
 async def get_service(service_class, session: AsyncSession = Depends(db.get_session)):
-    unique_id_instance = await get_unique_id_instance()
-    return service_class(session, unique_id_instance)
+    return service_class(session)
 
-async def get_student_service(session: AsyncSession = Depends(db.get_session)):     #one instanse
+async def get_student_service(session: AsyncSession = Depends(db.get_session)):
     return await get_service(StudentServices, session)
 
 async def get_teacher_service(session: AsyncSession = Depends(db.get_session)):
