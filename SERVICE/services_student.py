@@ -22,10 +22,6 @@ class StudentServices(ObjectServices):
             await self.session.refresh(db_student)
             return db_student
     
-    #async def update_obj(self, update_stu: StudentModel, login_stu: StudentModel):
-    #    current_stu = await super().update_obj(update_stu, login_stu)
-    #    return StudentDisplay.model_validate(current_stu)
-    
     
     async def enroll_student_in_course(self, course_id: int, student_id: int):    
         

@@ -6,6 +6,7 @@ from SCHEMA.schema_teacher import TeacherDisplay, TeacherCreate, TeacherUpdate
 from USECASE.manage_object import ObjectUseCase
 from ENUMS.object_type_digit import ObjectDigits
 from UTILITY.custom_error import CustomError
+from UTILITY.utility_enrollment import EnrollmentStudentInCourse
 
 from fastapi import HTTPException, status
 
@@ -37,8 +38,7 @@ class TeacherUseCase(ObjectUseCase[TeacherServices]):
                 detail="You are not authorized to remove students from this course."
             )
         
-        is_enrolled = await self.service.is_student_enrolled_in_course(course_id, student_id)
-        if not is_enrolled:
+        if not await EnrollmentStudentInCourse.is_student_enrolled_in_course(course_id, student_id):
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail="Student is not enrolled in this course."

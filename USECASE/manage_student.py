@@ -6,6 +6,7 @@ from SCHEMA.schema_student import StudentCreate, StudentUpdate, StudentDisplay
 from USECASE.manage_object import ObjectUseCase
 from ENUMS.object_type_digit import ObjectDigits
 from UTILITY.custom_error import CustomError
+from UTILITY.utility_enrollment import EnrollmentStudentInCourse
 
 from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -19,7 +20,6 @@ class StudentUseCase(ObjectUseCase[StudentServices]):
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Username should not be blank!')
         
         stu_id = self.unique_id.insert(ObjectDigits.STUDENT.value, ObjectToSTR.STUDENT.value)
-                
         db_student = await self.service.create_object(new_student, stu_id)
         self.unique_id.save_to_dict(db_student.name, db_student.id, ObjectToSTR.STUDENT.value)
         return db_student
@@ -34,7 +34,7 @@ class StudentUseCase(ObjectUseCase[StudentServices]):
         if not course:
             CustomError.existince_check(course_id, ObjectToSTR.COURSE, False)
 
-        is_enrolled = await self.service.is_student_enrolled_in_course(course_id, current_user.id)
+        is_enrolled = await EnrollmentStudentInCourse.is_student_enrolled_in_course(course_id, current_user.id)
         if is_enrolled:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,

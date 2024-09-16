@@ -18,8 +18,7 @@ class ClassroomUseCase(ObjectUseCase[ClassroomServices]):
         if not new_classroom.id or new_classroom.id <= 0:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Class number is not valid!')
         
-        exit_calssroom = await self.service.get_object_by_id()
-        if exit_calssroom:
+        if await self.service.get_object_by_id():
             CustomError.existince_check(new_classroom.id, ObjectToSTR.CLASSROOM, True)
         
         await self.service.create_object(new_classroom)
